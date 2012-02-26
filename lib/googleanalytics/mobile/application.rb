@@ -31,7 +31,7 @@ module GoogleAnalytics
               }).read
             end
           rescue TimeoutError
-          rescue
+          rescue OpenURI::HTTPError
           end
         end
 
