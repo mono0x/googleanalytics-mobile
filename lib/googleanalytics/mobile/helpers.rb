@@ -20,7 +20,7 @@ module GoogleAnalytics
         query = Rack::Utils.build_query({
           utmac: Helpers.tracking_id,
           utmn:  rand(0xffffffff),
-          utmr:  request.referer,
+          utmr:  request.referer || '-',
           utmp:  request.fullpath,
           guid:  'ON',
         })

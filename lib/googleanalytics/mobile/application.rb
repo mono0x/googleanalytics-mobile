@@ -57,7 +57,7 @@ module GoogleAnalytics
           query = Rack::Utils.build_query({
             utmwv:  VERSION,
             utmn:   rand(0xffffffff),
-            utmhn:  request.env['SERVER_NAME'],
+            utmhn:  request.host,
             utmr:   params[:utmr],
             utmp:   params[:utmp],
             utmac:  params[:utmac],
@@ -78,7 +78,7 @@ module GoogleAnalytics
           path:    '/',
           expires: Time.now + 2 * 365 * 24 * 60 * 60,
         }
-        expires -24 * 60 * 60, :private, :proxy_revalidate, no_cache: 'Set-Cookie'
+        expires(-24 * 60 * 60, :private, :proxy_revalidate, no_cache: 'Set-Cookie')
         GIF_DATA
       end
     end
