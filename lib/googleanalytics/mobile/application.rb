@@ -24,11 +24,15 @@ module GoogleAnalytics
       helpers do
         def send_request_to_google_analytics
           begin
+            headers = {}
+            if request.env['HTTP_ACCEPT_LANGUAGE']
+              headers['Accept-Language'] = request.env['HTTP_ACCEPT_LANGUAGE']
+            end
+            if request.user_agent
+              headers['User-Agent'] = request.user_agent
+            end
             timeout 3 do
-              open(utm_url, {
-                'Accept-Language' => request.env['HTTP_ACCEPT_LANGUAGE'],
-                'User-Agent' => request.user_agent,
-              }).read
+              open(utm_url, headers).read
             end
           rescue TimeoutError
           rescue OpenURI::HTTPError
